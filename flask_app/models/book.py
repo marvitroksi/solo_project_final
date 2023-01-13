@@ -3,18 +3,19 @@ from flask import flash
 
 
 class Book:
-    db_name = 'books'
+    db_name = 'booksfinal'
     def __init__(self,data):
         self.id = data['id'],
         self.title = data['tittle'],
         self.description = data['description'],
+        self.files = data['files'],
         self.created_at = data['created_at'],
         self.updated_at = data['updated_at']
 
     
     @classmethod
     def addBook(cls,data):
-        query = 'INSERT INTO books ( tittle, description, user_id ) VALUES ( %(tittle)s, %(description)s, %(user_id)s );'
+        query = 'INSERT INTO books ( tittle, description, files, user_id ) VALUES ( %(tittle)s, %(description)s, %(files)s, %(user_id)s );'
         return connectToMySQL(cls.db_name).query_db(query,data)
 
     
@@ -26,7 +27,7 @@ class Book:
 
     @classmethod
     def getAllBooks(cls,data):
-        query = 'SELECT books.tittle, books.description, books.id, users.first_name, users.last_name, users.id as creator_id FROM books LEFT JOIN users on books.user_id = users.id;'
+        query = 'SELECT books.tittle, books.description, books.files, books.id, users.first_name, users.last_name, users.id as creator_id FROM books LEFT JOIN users on books.user_id = users.id;'
         result = connectToMySQL(cls.db_name).query_db(query, data)
         books = []
         for row in result:
@@ -52,7 +53,7 @@ class Book:
 
     @classmethod
     def updateBook(cls,data):
-        query = 'UPDATE books SET tittle = %(tittle)s, description = %(description)s WHERE books.id = %(book_id)s;'
+        query = 'UPDATE books SET tittle = %(tittle)s, description = %(description)s, files = %(files)s WHERE books.id = %(book_id)s;'
         return connectToMySQL(cls.db_name).query_db(query,data)
 
     @classmethod
@@ -67,7 +68,6 @@ class Book:
 
     @classmethod
     def getSavedCount(cls,data):
-
         query = 'SELECT count(books.id) AS number FROM books LEFT JOIN favorites ON books.favorite_id = favorites.id LEFT JOIN users on books.user_id = users.id WHERE books.user_id = %(user_id)s GROUP BY favorites.id;'
         result = connectToMySQL(cls.db_name).query_db(query,data)
         if result:
@@ -89,10 +89,8 @@ class Book:
     def deleteFaves (cls,data):
         query = "DELETE FROM favorites WHERE book_id = %(book_id)s;"
         result1 = connectToMySQL(cls.db_name).query_db(query,data)
-        print("KTU TE QIFSHA ROPT")
         query2 = "DELETE FROM books WHERE books.id = %(book_id)s"
         result2 = connectToMySQL(cls.db_name).query_db(query2,data)
-        print(" O KURVE ZAGREBIIIIIIIIIIIIIIIII")
         return connectToMySQL(cls.db_name).query_db(query,data)
 
 

@@ -9,17 +9,8 @@
     <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsydjDBSfJ5Fc-Y1IXpDs_UVCmwDn9n5DNZw&usqp=CAU">
 
     <style>
-        *,
-        *:before,
-        *:after {
-            margin: 0;
-            padding: 0;
-            box-sizing: inherit;
-        }
-        html,body{
+        html{
             height: auto;
-        }
-        html {
             box-sizing: border-box;
             font-family: "Roboto", sans-serif;
             font-size: 62.5%;
@@ -117,8 +108,8 @@
         }
         }
         .slider .box .details {
-            padding: 5rem;
-            padding-left: 10rem;
+            padding: 3rem;
+            padding-left: 7rem;
             z-index: 100;
             grid-column: 1/span 1;
             grid-row: 1/-1;
@@ -305,7 +296,7 @@
             }
         }
         .one{
-            margin-right: 35%;
+            margin-right: 25%;
             font-size: 400%;
             font-family: gabriola;
             font-weight: bold;
@@ -316,15 +307,21 @@
 
     <div class=" btn-box d-flex justify-content-end mb-5 mt-5">
         <h1 class="one">Welcome: {{loggedUser.first_name}} {{loggedUser.last_name}}</h1>
-
-        <a href='/addBook' class="btn3 btn-lg m-3" role="button" aria-pressed="true">
+        <a href="/account" class="btn3 m-3" role="button" aria-pressed="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Check profile
+        </a>
+        <a href='/addBook' class="btn3 m-3" role="button" aria-pressed="true">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
             Add Book
         </a>
-        <a href='/logout' class="btn3 btn-lg m-3" role="button" aria-pressed="true">
+        <a href='/logout' class="btn3 m-3" role="button" aria-pressed="true">
             <span></span>
             <span></span>
             <span></span>
@@ -343,7 +340,8 @@
                         <h1>Tittle: {{book.tittle}}</h1>
                         <p>Description: {{book.description}}</p>
                         <p class="author">Added by: {{book.first_name}} {{book.last_name}}</p>
-                        <a  href='/show/{{book.id}}' class="btn btn-primary btn-lg active m-3" role="button" aria-pressed="true">Check Now</a>
+                        
+                        <a  href='/show/{{book.id}}' class="btn btn-primary active m-3" role="button" aria-pressed="true">Check Now</a>
                         {% if book.id not in favs %}
                             <a class="btn mx-2" href="/favorite/{{book.id}}">Save</a>
                         {% endif %}

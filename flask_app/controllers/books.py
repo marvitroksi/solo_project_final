@@ -1,6 +1,21 @@
 from flask_app import app
-from flask import render_template, request, redirect, session, flash
+from flask import render_template, request, redirect, session, flash, send_from_directory, send_file
 from flask_app.models.book import Book
+import os
+# from contextlib import nullcontext
+from datetime import datetime
+import uuid as uuid
+# Photo upload Imports
+from werkzeug.utils import secure_filename
+# from werkzeug.datastructures import  FileStorage
+
+UPLOAD_FOLDER = 'flask_app/static/img/'
+ALLOWED_EXTENSIONS = {'pdf', 'txt'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 
@@ -34,6 +49,22 @@ def addBook():
         'description': request.form['description'],
         'user_id': session['user']
     }
+    file = request.files['files']
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        time = datetime.now().strftime("%d%m%Y%S%f")
+        time += filename
+        filename = time
+        files = str(uuid.uuid1()) + "_" + filename
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], files))
+        data['files'] = files
+    else:
+        flash("Allowed files typse are .pdf, .txt", 'allowedError')
+        return redirect(request.referrer)
+    if request.files['files'] is None:
+        files = ''
+    if request.files['files'] is not None:
+        files = request.files['files']
     Book.addBook(data)
     return redirect('/dashboard')
 
@@ -47,7 +78,6 @@ def deleteBook(id):
     book = Book.getBookByID(data)
     if not session['user'] == book['user_id']:
         return render_template("404Error.html")
-    print("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
     Book.deleteFaves(data)
     return redirect(request.referrer)
 
@@ -100,3 +130,7 @@ def editForm(id):
     if not session['user'] == book['user_id']:
         return render_template("404Error.html")
     return render_template('updateBook.html', book = Book.getBookByID(data))
+
+@app.route('/downloadPDF/<path:filename>')
+def downloadPDF(filename):
+    return send_file(app.root_path+'/static/img/'+filename, as_attachment=True)
