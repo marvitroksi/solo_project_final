@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Club</title>
+    <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsydjDBSfJ5Fc-Y1IXpDs_UVCmwDn9n5DNZw&usqp=CAU">
+    <style>
+        body {
+            margin: auto;
+            color: #5a2a27;
+            background:#e6aa68;
+            font-family: 'Montserrat', monospace;
+            font-weight: bold;
+        }
+        
+         *,
+         :after,
+         :before {
+            box-sizing: border-box
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+        
+        .container {
+            width: 100%;
+            height: auto;
+            margin: auto;
+            margin-top: 5%; 
+            max-width: 525px;
+            min-height: 600px;
+            position: relative;
+            box-shadow: 0 15px 25px  rgba(0,0,0,0.6);
+        }
+        
+        .login-container {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            padding: 107px 50px;
+            background: #dcc48e;
+        }
+        
+        .login-container .sign-up-htm {
+            top: 10%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            transition: all .4s linear;
+        }
+
+        .login-container .sign-in-htm{
+            top: 20%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            transition: all .4s linear;
+        }
+        
+        .login-container .sign-in,
+        .login-container .sign-up,
+        .login-form .group .check {
+            display: none;
+        }
+
+        .login-container .item,
+        .login-form .group .label{
+            text-transform: uppercase;
+        }
+        
+        .login-container .item {
+            font-size: 22px;
+            margin-right: 15px;
+            padding-bottom: 5px;
+            margin: 0 15px 10px 0;   
+            display: inline-block;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .login-container .sign-in:checked+.item,
+        .login-container .sign-up:checked+.item {
+            color: #fff;
+            border-color: #5a2a27;
+        }
+        
+        .login-form {
+            min-height: 345px;
+            position: relative;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
+        .login-form .group {
+            margin-bottom: 15px;
+        }
+        
+        .login-form .group .label,
+        .login-form .group .input {
+            width: 100%;
+            color: #5a2a27;
+            display: block;
+        }
+        
+        button.control {
+            cursor: pointer;
+            width: 100%;
+            height: 56px;
+            padding: 0 16px;
+            background: #c2650f;
+            color: #f9f9f9;
+            border: 0;
+            border-radius: 35px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        
+        .login-form .group .input {
+            border: none;
+            padding: 20px 20px;
+            border-radius: 25px;
+        }
+        
+        .login-form .group input[data-type="password"] {
+            /* text-security: circle; */
+            -webkit-text-security: circle;
+        }
+        
+        .login-container .sign-in:checked+.item+.sign-up+.item+.login-form .sign-in-htm {
+            transform: rotate(0);
+        }
+        
+        .login-container .sign-up:checked+.item+.login-form .sign-up-htm {
+            transform: rotate(0);
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <input id="item-1" type="radio" name="item" class="sign-in" checked><label for="item-1" class="item">Login</label>
+            <input id="item-2" type="radio" name="item" class="sign-up"><label for="item-2" class="item">Register</label>
+            <div class="login-form">
+                <form class="sign-in-htm" action="/login" method="post">
+                    <div class="group">
+                        <input placeholder="Email" type="email" class="input" name="email">
+                    </div>
+                    <div class="group">
+                        <input placeholder="Password" type="password" class="input" data-type="password" name="password">
+                    </div>
+
+                    <button class="control" type="submit">LOGIN</button>
+                </form>
+                <form class="sign-up-htm" action="/register" method="post"> 
+                    <div class="group">
+                        <input placeholder="First Name" type="text" class="input" name="first_name">
+                    </div>
+                    <div class="group">
+                        <input placeholder="Last Name" type="text" class="input" name="last_name">
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Email adress" type="text" class="input" name="email">
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Password" type="password" class="input" data-type="password" name="password">
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Repeat password" type="password" class="input" data-type="password" name="confirmPassword">
+                    </div>
+
+                    <button class="control" type="submit">REGISTER</button>
+                </form>
+            </div>
+		</div>
+	</div>
+</body>
+</html>

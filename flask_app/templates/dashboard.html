@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">        
+    <title>Book Club</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsydjDBSfJ5Fc-Y1IXpDs_UVCmwDn9n5DNZw&usqp=CAU">
+
+    <style>
+        *,
+        *:before,
+        *:after {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+        }
+        html,body{
+            height: auto;
+        }
+        html {
+            box-sizing: border-box;
+            font-family: "Roboto", sans-serif;
+            font-size: 62.5%;
+        }
+        @media only screen and (max-width: 800px) {
+        html {
+            font-size: 57%;
+        }
+        }
+        body {
+            background: linear-gradient(#ac7b5c, #db995a);
+            color: #fff;
+            width: 100%;
+        }
+        @media only screen and (max-width: 1000px) {
+        body {
+            padding: 0;
+        }
+        }
+        .container {
+            position: relative;
+            overflow: hidden;
+        }
+        .slider {
+            display: flex;
+            width: 100%;
+            height: auto;
+            transform: translateX(0);
+            margin-bottom: 20px;
+            margin-left: 15%;
+
+        }
+        @media only screen and (max-width: 1000px) {
+        .slider {
+            height: 100vh;
+        }
+        }
+        .slider .box {
+            height: 80%;
+            width: 65%;
+            display: grid;
+            border-radius: 10px;
+            grid-template-columns: repeat(2, 1fr);
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        @media only screen and (max-width: 650px) {
+        .slider .box {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2, 1fr);
+        }
+        }
+        .slider .box .bg {
+            padding: 2rem;
+            background-color: #d9ad7c;
+            width: 60%;
+            position: absolute;
+            height: 100%;
+            left: -10%;
+            padding-left: 20rem;
+            transform-origin: 0 100%;
+            opacity: 70%;
+        }
+        @media only screen and (max-width: 800px) {
+        .slider .box .bg {
+            width: 65%;
+        }
+        }
+        @media only screen and (max-width: 650px) {
+        .slider .box .bg {
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            height: 54%;
+            transform: skewX(0deg);
+        }
+        }
+        .slider .box .bg::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: inherit;
+            pointer-events: none;
+            transform: skewX(10deg);
+        }
+        @media only screen and (max-width: 650px) {
+        .slider .box .bg::before {
+            width: 120%;
+            bottom: 0;
+            transform: skewX(0deg);
+        }
+        }
+        .slider .box .details {
+            padding: 5rem;
+            padding-left: 10rem;
+            z-index: 100;
+            grid-column: 1/span 1;
+            grid-row: 1/-1;
+        }
+        @media only screen and (max-width: 650px) {
+        .slider .box .details {
+            grid-row: 2/span 1;
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 2rem;
+            transform: translateY(-9rem);
+        }
+        }
+        .slider .box .details h1 {
+            font-size: 3rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .slider .box .details p {
+            display: inline-block;
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            margin-right: 5rem;
+        }
+        @media only screen and (max-width: 800px) {
+        .slider .box .details p {
+            margin-right: 0;
+        }
+        }
+        .slider .box .details .btn   {
+            padding: 1rem 3rem;
+            color: #fff;
+            border-radius: 2rem;
+            outline: none;
+            border: none;
+            cursor: pointer;
+        }
+        .slider .box .details .btn:hover {
+            opacity: 0.8;
+        }
+        .slider .box .details .btn:focus {
+            outline: none;
+            border: none;
+        }
+        .slider .box1 {
+            background-color: #fff2df;
+        }
+        .slider .box1 .illustration .inner {
+            background-color: #fdd692;
+            opacity: 70%;
+        }
+        .slider .box1 .illustration .inner::after, .slider .box1 .illustration .inner::before {
+            background-color: #edd38f;
+            opacity: 55%;
+        }
+        .slider .box1 .btn {
+            background-color: #805b4d;
+        }
+        .slider .illustration div {
+            height: 25rem;
+            width: 18rem;
+            border-radius: 3rem;
+            position: relative;
+            transform: skewX(-10deg);
+        }
+        .slider .illustration div::after, .slider .illustration div::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            border-radius: 3rem;
+            top: 0;
+            left: 0;
+        }
+        .slider .illustration div::after {
+            transform: translate(4rem, -1rem);
+        }
+        .slider .illustration div::before {
+            transform: translate(2rem, -2rem);
+        } 
+        /* nav buttons */
+        .btn-box .btn3 {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            color: #5a2a27;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: .5s;
+            margin-top: 40px;
+            letter-spacing: 4px
+        }
+
+        .btn-box .btn3:hover {
+            background: #5a2a27;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #5a2a27,
+                        0 0 25px #5a2a27,
+                        0 0 50px #5a2a27,
+                        0 0 100px #5a2a27;
+        }
+
+        .btn-box .btn3 span {
+            position: absolute;
+            display: block;
+        }
+
+        .btn-box .btn3 span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #5a2a27);
+            animation: btn-anim1 1s linear infinite;
+        }
+
+        @keyframes btn-anim1 {
+        0% {
+            left: -100%;
+        }
+        50%,100% {
+            left: 100%;
+        }
+        }
+
+        .btn-box .btn3 span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #5a2a27);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: .25s
+        }
+
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+            50%,100% {
+                top: 100%;
+            }
+        }
+
+        .btn-box .btn3 span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #5a2a27);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: .5s
+        }
+
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+            50%,100% {
+                right: 100%;
+            }
+        }
+
+        .btn-box .btn3 span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #5a2a27);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: .75s
+        }
+
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+            50%,100% {
+                bottom: 100%;
+            }
+        }
+        .one{
+            margin-right: 35%;
+            font-size: 400%;
+            font-family: gabriola;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class=" btn-box d-flex justify-content-end mb-5 mt-5">
+        <h1 class="one">Welcome: {{loggedUser.first_name}} {{loggedUser.last_name}}</h1>
+
+        <a href='/addBook' class="btn3 btn-lg m-3" role="button" aria-pressed="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Add Book
+        </a>
+        <a href='/logout' class="btn3 btn-lg m-3" role="button" aria-pressed="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Logout
+        </a>
+    </div>
+        {% if books %}
+        <div class="container"> 
+            {% for book in books %}
+            
+            <div class="slider">
+                <div class="box1 box">
+                    <div class="bg"></div>
+                    <div class="details">
+                        <h1>Tittle: {{book.tittle}}</h1>
+                        <p>Description: {{book.description}}</p>
+                        <p class="author">Added by: {{book.first_name}} {{book.last_name}}</p>
+                        <a  href='/show/{{book.id}}' class="btn btn-primary btn-lg active m-3" role="button" aria-pressed="true">Check Now</a>
+                        {% if book.id not in favs %}
+                            <a class="btn mx-2" href="/favorite/{{book.id}}">Save</a>
+                        {% endif %}
+                        {% if book.id in favs %}
+                            <a class="btn mx-2" href="/unfavorite/{{book.id}}">Unsave</a>
+                        {% endif %}
+                        {% if book.creator_id == loggedUser.id %}
+                            <a class="btn mx-2" href="/delete/{{book.id}}">Delete</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="illustration"><div class="inner"></div></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <h1>Please add some books</h1>
+        {% endif %} 
+    </div>
+    
+</body>
+</html>
